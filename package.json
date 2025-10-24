@@ -26,5 +26,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/amarjot55/ecommerce-easyBUY"
+  },
+  "dependencies": {
+    "react-slick": "^0.31.0",
+    "slick-carousel": "^1.8.1"
   }
 }
