@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "mern-ecommerce-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend API for MERN ecommerce application",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Amarjot Singh",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
