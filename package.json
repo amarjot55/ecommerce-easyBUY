@@ -13,7 +13,14 @@
     "build:frontend": "cd frontend && npm run build",
     "seed": "cd backend && npm run seed"
   },
-  "keywords": ["mern", "ecommerce", "react", "node", "mongodb", "redux"],
+  "keywords": [
+    "mern",
+    "ecommerce",
+    "react",
+    "node",
+    "mongodb",
+    "redux"
+  ],
   "author": "Amarjot Singh",
   "license": "ISC",
   "repository": {
