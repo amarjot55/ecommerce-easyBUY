@@ -22,7 +22,7 @@ const users = [
   {
     name: "Amarjot Singh",
     email: "sagguamarjot@gmail.com",
-    password: '$2a$10$L5oEiADMUjDQD8KrGd6TsubqyJYlyOdDxuquO5kW10/boqRxFtY4q', // hashed for "12345678"
+    password: '12345678',
     isVerified: true,
     isAdmin: false,
   },

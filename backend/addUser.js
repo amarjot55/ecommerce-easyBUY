@@ -10,7 +10,7 @@ const addUser = async () => {
     const newUser = {
       name: "Amarjot Singh",
       email: "sagguamarjot@gmail.com",
-      password: '$2a$10$ThYjWMAnRzw4iVwzFZAVpe.HdE2HDgxK2QxjsXQIcPsHLPsrHf1Hy', // hashed for "12345678"
+      password: '12345678',
       isVerified: true,
       isAdmin: false,
     };

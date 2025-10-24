@@ -17,8 +17,8 @@ exports.signup=async(req,res)=>{
         }
 
         // hashing the password
-        const hashedPassword=await bcrypt.hash(req.body.password,10)
-        req.body.password=hashedPassword
+        // const hashedPassword=await bcrypt.hash(req.body.password,10)
+        // req.body.password=hashedPassword
 
         // creating new user
         const createdUser=new User(req.body)
@@ -51,7 +51,7 @@ exports.login=async(req,res)=>{
         const existingUser=await User.findOne({email:req.body.email})
 
         // if exists and password matches the hash
-        if(existingUser && (await bcrypt.compare(req.body.password,existingUser.password))){
+        if(existingUser && req.body.password === existingUser.password){
 
             // getting secure user info
             const secureInfo=sanitizeUser(existingUser)
@@ -101,7 +101,7 @@ exports.verifyOtp=async(req,res)=>{
         }
         
         // checks if otp is there and matches the hash value then updates the user verified status to true and returns the updated user
-        if(isOtpExisting && (await bcrypt.compare(req.body.otp,isOtpExisting.otp))){
+        if(isOtpExisting && req.body.otp === isOtpExisting.otp){
             await Otp.findByIdAndDelete(isOtpExisting._id)
             const verifiedUser=await User.findByIdAndUpdate(isValidUserId._id,{isVerified:true},{new:true})
             return res.status(200).json(sanitizeUser(verifiedUser))
@@ -129,7 +129,8 @@ exports.resendOtp=async(req,res)=>{
         await Otp.deleteMany({user:existingUser._id})
 
         const otp=generateOTP()
-        const hashedOtp=await bcrypt.hash(otp,10)
+        // const hashedOtp=await bcrypt.hash(otp,10)
+        const hashedOtp=otp
 
         const newOtp=new Otp({user:req.body.user,otp:hashedOtp,expiresAt:Date.now()+parseInt(process.env.OTP_EXPIRATION_TIME)})
         await newOtp.save()
@@ -160,7 +161,8 @@ exports.forgotPassword=async(req,res)=>{
         const passwordResetToken=generateToken(sanitizeUser(isExistingUser),true)
 
         // hashes the token
-        const hashedToken=await bcrypt.hash(passwordResetToken,10)
+        // const hashedToken=await bcrypt.hash(passwordResetToken,10)
+        const hashedToken=passwordResetToken
 
         // saves hashed token in passwordResetToken collection
         newToken=new PasswordResetToken({user:isExistingUser._id,token:hashedToken,expiresAt:Date.now() + parseInt(process.env.OTP_EXPIRATION_TIME)})
@@ -212,13 +214,13 @@ exports.resetPassword=async(req,res)=>{
         }
 
         // if token exists and is not expired and token matches the hash, then resets the user password and deletes the token
-        if(isResetTokenExisting && isResetTokenExisting.expiresAt>new Date() && (await bcrypt.compare(req.body.token,isResetTokenExisting.token))){
+        if(isResetTokenExisting && isResetTokenExisting.expiresAt>new Date() && req.body.token === isResetTokenExisting.token){
 
             // deleting the password reset token
             await PasswordResetToken.findByIdAndDelete(isResetTokenExisting._id)
 
-            // resets the password after hashing it
-            await User.findByIdAndUpdate(isExistingUser._id,{password:await bcrypt.hash(req.body.password,10)})
+        // resets the password after hashing it
+        await User.findByIdAndUpdate(isExistingUser._id,{password:req.body.password})
             return res.status(200).json({message:"Password Updated Successfuly"})
         }
 
